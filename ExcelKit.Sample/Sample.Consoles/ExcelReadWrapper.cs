@@ -47,16 +47,21 @@ namespace Sample.Consoles
 		}
 
 		/// <summary>
-		/// 读取后转换为实体类(切记，此处的文件要存在。没有的话，自己可以生成一个)
+		/// 读取后转换为实体类(切记，此处的文件要存在且不可被占用。没有的话，自己可以生成一个)
 		/// </summary>
+		/// <remarks>更多读取项请查看ReadSheetOptions的定义，如读取结束行，按Sheet索引读取，按Sheet名称读取，读取开始行</remarks>
 		public static void ReadSheet()
 		{
 			var context = ContextFactory.GetReadContext();
-			context.ReadSheet<UserImportDto>("用户数据-202006201247.xls", new ReadSheetOptions<UserImportDto>()
+			context.ReadSheet<UserImportDto>("用户数据-202006201252.xlsx", new ReadSheetOptions<UserImportDto>()
 			{
 				SucData = (rowdata, rowindex) =>
 				{
 					Console.WriteLine(JsonConvert.SerializeObject(rowdata));
+				},
+				FailData = (odata, failinfo) =>
+				{
+
 				}
 			});
 		}

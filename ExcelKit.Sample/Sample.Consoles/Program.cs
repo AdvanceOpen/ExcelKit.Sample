@@ -7,9 +7,9 @@ namespace Sample.Consoles
 	{
 		static void Main(string[] args)
 		{
-			ExcelWriteWrapper.GenericWrite();
+			//ExcelWriteWrapper.GenericWrite();
 
-			//ExcelReadWrapper.ReadSheet();
+			ExcelReadWrapper.ReadSheet();
 			Console.Read();
 		}
 	}

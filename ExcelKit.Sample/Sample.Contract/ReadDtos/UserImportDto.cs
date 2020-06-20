@@ -12,7 +12,7 @@ namespace Sample.Contract.ReadDtos
 		public string Name { get; set; }
 
 		[ExcelKit(Desc = "金额")]
-		public double Money { get; set; }
+		public decimal Money { get; set; }
 
 		[ExcelKit(Desc = "创建时间")]
 		public DateTime CreateDate { get; set; }

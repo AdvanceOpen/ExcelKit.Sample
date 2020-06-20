@@ -18,7 +18,7 @@ namespace Sample.Contract.WriteDtos
 		public string Name { get; set; }
 
 		[ExcelKit(Desc = "金额", Width = 20, Sort = 10, Converter = typeof(DecimalPointDigitConverter), ConverterParam = 2)]
-		public double Money { get; set; } = 20;
+		public decimal Money { get; set; } = 20;
 
 		[ExcelKit(Desc = "创建时间", Width = 50, Sort = 10, Converter = typeof(DateTimeFmtConverter), ConverterParam = "yyyy-MM-dd")]
 		public DateTime CreateDate { get; set; } = DateTime.Now;
