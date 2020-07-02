@@ -187,7 +187,7 @@ context.ReadRows("测试导出文件.xlsx", new ReadRowsOptions()
 ```csharp
 
 var context = ContextFactory.GetReadContext();
-context.ReadSheet<UserDto>("测试导出文件.xls", new ReadSheetOptions<UserDto>()
+context.ReadSheet<UserDto>("测试导出文件.xlsx", new ReadSheetOptions<UserDto>()
 {
 	SucData = (rowdata, rowindex) =>
 	{
