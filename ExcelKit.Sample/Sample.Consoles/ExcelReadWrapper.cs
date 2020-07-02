@@ -31,7 +31,7 @@ namespace Sample.Consoles
 		}
 
 		/// <summary>
-		/// 根据Sheet名称读取行数据
+		/// 根据Sheet名称读取行数据，返回一行数据IList<string>
 		/// </summary>
 		public static void SheetNameReadRows()
 		{
@@ -61,7 +61,7 @@ namespace Sample.Consoles
 				},
 				FailData = (odata, failinfo) =>
 				{
-
+					//odata为Excel中的原始数据，FailInfo为失败相关信息
 				}
 			});
 		}
@@ -71,8 +71,7 @@ namespace Sample.Consoles
 		/// </summary>
 		public static void ReadSheetDic()
 		{
-			var context = ContextFactory.GetReadContext();
-			context.ReadSheet("测试导出文件.xlsx", new ReadSheetDicOptions()
+			ContextFactory.GetReadContext().ReadSheet("测试导出文件.xlsx", new ReadSheetDicOptions()
 			{
 				DataEndRow = 10,
 				ExcelFields = new (string field, ColumnType type, bool allowNull)[]
@@ -82,6 +81,10 @@ namespace Sample.Consoles
 				SucData = (rowdata, rowindex) =>
 				{
 					Console.WriteLine(JsonConvert.SerializeObject(rowdata));
+				},
+				FailData = (odata, failinfo) =>
+				{
+					//odata为Excel中的原始数据，FailInfo为失败相关信息
 				}
 			});
 		}

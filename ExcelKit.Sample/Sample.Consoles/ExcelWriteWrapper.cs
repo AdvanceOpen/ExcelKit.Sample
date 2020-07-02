@@ -12,7 +12,7 @@ namespace Sample.Consoles
 	public class ExcelWriteWrapper
 	{
 		/// <summary>
-		/// 导出用户数据
+		/// 导出用户数据（采用了并发多Sheet导出，一个线程一个Sheet，不需要可以去掉Parallel，采用单纯的for）
 		/// </summary>
 		/// <remarks>
 		/// 1.获取GetWriteContext并指定导出文件名
@@ -43,11 +43,16 @@ namespace Sample.Consoles
 			return filePath;
 		}
 
+		/// <summary>
+		/// 动态导出，不需要建立类，直接指定
+		/// </summary>
+		/// <returns></returns>
 		public static string DynamicWrite()
 		{
 			string filePath;
 			using (var context = ContextFactory.GetWriteContext($"用户数据-{DateTime.Now.ToString("yyyyMMddHHmm")}"))
 			{
+				//动态指定Code为字段名，自己定义，和AppendData中的数据字段名保持一致即可，Desc为导出的Excel列头名
 				var sheet = context.CrateSheet("Sheet1", new List<ExcelKitAttribute>()
 				{
 					new ExcelKitAttribute(){ Code = "Account", Desc = "账号",Width=60 },
@@ -56,6 +61,7 @@ namespace Sample.Consoles
 
 				for (int i = 0; i < 10; i++)
 				{
+					//Dictionary中的Key为上面指定的Code中的字段，Value为数据
 					sheet.AppendData("Sheet1", new Dictionary<string, object>()
 					{
 						{"Account", $"{i}-2010211" }, {"Name", $"{i}-用户用户" }
