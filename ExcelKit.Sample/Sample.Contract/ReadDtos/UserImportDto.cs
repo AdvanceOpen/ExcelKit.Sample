@@ -3,6 +3,9 @@ using ExcelKit.Core.Attributes;
 
 namespace Sample.Contract.ReadDtos
 {
+	/// <summary>
+	/// 读取
+	/// </summary>
 	public class UserImportDto
 	{
 		[ExcelKit(Desc = "账号")]

@@ -1,1 +1,0 @@
-1.字段定义为double但又使用了DecimalPointDigitConverter读取时会报错，可定义为decimal，错误提示：Object of type 'System.Decimal' cannot be converted to type 'System.Double，下个版本解决
