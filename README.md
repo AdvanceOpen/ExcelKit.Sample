@@ -14,9 +14,9 @@ Excel导入导出套件，支持百万级(几百万亦可)数据导出和读取�
 
 ### ExcelKitAttribute详解：
 
-Code：字段编码，一般用于读取时使用，如Name、Age
+Code：字段编码，如Name、Age; 读取时不指定Code默认使用字段名
 
-Desc：字段描述，对应Excel列头中的文本，如 姓名、地址
+Desc：字段描述[必指定]，对应Excel列头中的文本，如 姓名、地址，
 
 AllowNull：字段是否允许为空，一般用于读取
 
@@ -187,7 +187,7 @@ context.ReadRows("测试导出文件.xlsx", new ReadRowsOptions()
 ```csharp
 
 var context = ContextFactory.GetReadContext();
-context.ReadSheet<UserDto>("测试导出文件.xls", new ReadSheetOptions<UserDto>()
+context.ReadSheet<UserDto>("测试导出文件.xlsx", new ReadSheetOptions<UserDto>()
 {
 	SucData = (rowdata, rowindex) =>
 	{
