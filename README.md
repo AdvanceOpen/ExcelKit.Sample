@@ -6,7 +6,7 @@ Excel导入导出套件，支持百万级(几百万亦可)数据导出和读取�
 
 使用方式：Nuget安装：`Install-Package ExcelKit`
 
-**重要提示：如果另外安装了NPOI，请使用NPOI2.4.1版本
+**重要提示：如果另外安装了NPOI，请使用NPOI2.4.1版本；已增加Web项目使用示例，可直接运行
 
 
 
