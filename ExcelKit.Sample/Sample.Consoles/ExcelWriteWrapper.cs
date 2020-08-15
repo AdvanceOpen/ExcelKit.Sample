@@ -52,13 +52,14 @@ namespace Sample.Consoles
 			using (var context = ContextFactory.GetWriteContext($"用户数据-{DateTime.Now.ToString("yyyyMMddHHmm")}"))
 			{
 				//动态指定Code为字段名，自己定义，和AppendData中的数据字段名保持一致即可，Desc为导出的Excel列头名
+				//注意CreateSheet方法最后一个字段，指定多少条数据自动拆分一个新Sheet，不指定默认为单Sheet最大数据量1048200
 				var sheet = context.CrateSheet("Sheet1", new List<ExcelKitAttribute>()
 				{
 					new ExcelKitAttribute(){ Code = "Account", Desc = "账号",Width=60 },
 					new ExcelKitAttribute(){ Code = "Name", Desc = "昵称" }
-				}, 5);
+				});
 
-				for (int i = 0; i < 10; i++)
+				for (int i = 0; i < 104; i++)
 				{
 					//Dictionary中的Key为上面指定的Code中的字段，Value为数据
 					sheet.AppendData("Sheet1", new Dictionary<string, object>()

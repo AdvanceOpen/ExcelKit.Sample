@@ -3,14 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Contract", "Sample.Contract\Sample.Contract.csproj", "{99CC3CA4-2F09-4A80-BA80-ACB47653D397}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Contract", "Sample.Contract\Sample.Contract.csproj", "{99CC3CA4-2F09-4A80-BA80-ACB47653D397}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Consoles", "Sample.Consoles\Sample.Consoles.csproj", "{3CE58F0C-A62D-4CF2-AA3E-208AE294DB24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Consoles", "Sample.Consoles\Sample.Consoles.csproj", "{3CE58F0C-A62D-4CF2-AA3E-208AE294DB24}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BugCollections", "BugCollections", "{77DC5548-6E61-4C4F-A533-221AF18F6913}"
 	ProjectSection(SolutionItems) = preProject
 		bug收集.txt = bug收集.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.AspNetCore", "Sample.AspNetCore\Sample.AspNetCore.csproj", "{CEA0DCFD-668D-4F61-8538-F9767ABB5928}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{3CE58F0C-A62D-4CF2-AA3E-208AE294DB24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CE58F0C-A62D-4CF2-AA3E-208AE294DB24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CE58F0C-A62D-4CF2-AA3E-208AE294DB24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEA0DCFD-668D-4F61-8538-F9767ABB5928}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEA0DCFD-668D-4F61-8538-F9767ABB5928}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEA0DCFD-668D-4F61-8538-F9767ABB5928}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEA0DCFD-668D-4F61-8538-F9767ABB5928}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

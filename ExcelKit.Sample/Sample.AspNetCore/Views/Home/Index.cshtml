@@ -1,0 +1,63 @@
+﻿@{
+	Layout = null;
+}
+<!DOCTYPE html>
+<html class="loginHtml">
+<head>
+	<meta charset="utf-8">
+	<title>ExcelKit使用示例(Web)</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="icon" href="~/favicon.ico">
+	<link href="@Url.Content("~/lib/layui/css/layui.css")" rel="stylesheet" media="all" asp-append-version="true" />
+	<style>
+		.grid-c {
+			padding: 10px;
+			line-height: 50px;
+			text-align: center;
+			background-color: #79C48C;
+			color: #fff;
+		}
+
+		.grid-bg1 {
+			background-color: #63BA79;
+		}
+	</style>
+</head>
+<body class="loginBody">
+	<div class="layui-container">
+		<div class="layui-fluid">
+			<fieldset class="layui-elem-field layui-field-title">
+				<legend>ExcelKit使用示例</legend>
+			</fieldset>
+			<div class="layui-row">
+				<div class="layui-col-sm3">
+					<div class="grid-c grid-bg1">
+						<a class="layui-btn layui-btn-primary layui-btn-radius" href="@Url.Action("GenericExport","Export")">泛型类导出</a>
+					</div>
+				</div>
+				<div class="layui-col-sm3">
+					<div class="grid-c grid-bg1">
+						<a class="layui-btn layui-btn-radius" href="@Url.Action("LiteDataExport","Export")">LiteData导出</a>
+					</div>
+				</div>
+				<div class="layui-col-sm3">
+					<div class="grid-c grid-bg1">
+						<a class="layui-btn layui-btn-normal layui-btn-radius" href="@Url.Action("GenericSaveToDisk","Export")">保存至本地</a>
+					</div>
+				</div>
+				<div class="layui-col-sm3">
+					<div class="grid-c grid-bg1">
+						<a class="layui-btn layui-btn-warm layui-btn-radius" href="@Url.Action("DynamicDataExport","Export")">动态数据导出</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="@Url.Content("~/lib/layui/layui.js")"></script>
+</body>
+</html>
