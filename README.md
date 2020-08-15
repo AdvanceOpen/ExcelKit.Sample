@@ -6,7 +6,7 @@ Excel导入导出套件，支持百万级(几百万亦可)数据导出和读取�
 
 使用方式：Nuget安装：`Install-Package ExcelKit`
 
-**重要提示：如另外安装了NPOI，请使用NPOI2.4.1版本
+**重要提示：如果另外安装了NPOI，请使用NPOI2.4.1版本
 
 
 
@@ -38,7 +38,12 @@ HeadRowFrozen：是否启用表头行冻结[导出时]
 
 HeadRowFilter：是否启用表头行筛选[导出时]
 
-IsIgnore：是否忽略
+IsIgnore：是否完全忽略
+
+IsOnlyIgnoreRead：是否仅读取时忽略
+
+IsOnlyIgnoreWrite：是否仅导出时忽略
+
 
 -----
 
