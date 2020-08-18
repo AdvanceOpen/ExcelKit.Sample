@@ -59,7 +59,7 @@ Converter为内置的接口IExportConverter，主要是为了导出使用；目�
 * BoolConverter（导出后显示为：是   否）
 * DateTimeFmtConverter（日期格式化Converter，如需自定义日期格式，需指定ConverterParam，使用详见下方示例）
 * DecimalPointDigitConverter（小数类Converter，如需指定保留几位小数，需指定ConverterParam，使用详见下方示例）
-* EnumConverter（枚举Converter，需要在枚举上方打上此特性[System.ComponentModel.Description("用户类型")]，导出时就会根据指定的描述展示对应的文字）
+* EnumConverter（枚举Converter，需要在枚举上方打上此特性[System.ComponentModel.Description("用户类型")]，导出时就会根据指定的描述展示对应的文字，如果枚举加了可空，则使用时Converter = typeof(EnumConverter<UserStatusEnum?>)）
 * EnumerableConverter（集合类Converter，如字段定义为public List<string> SkuSellRegion { get; set; }则上方Converter = typeof(EnumerableConverter<string>)，导出后会自动拆分为字符串，以，分隔的长文本）
 
 -----
