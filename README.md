@@ -77,10 +77,12 @@ Converter为内置的接口IExportConverter，主要是为了导出使用；目�
 
 1.1 泛型类型
 
+```csharp
 
 //如果数据量不大，可采用此方式便捷导出
 var excelInfo = LiteDataHelper.ExportToWebDown(users,fileName: $"用户数据-{DateTime.Now.ToString("yyyyMMddHHmm")}");
 
+```
 
 ```csharp
 
