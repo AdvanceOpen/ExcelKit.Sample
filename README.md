@@ -22,7 +22,7 @@ AllowNull：字段是否允许为空，一般用于读取
 
 Converter：转换器[导出时]，组件中提供了常用的转换器，如需自定义，则继承自IExportConverter<T>并实现方法
 
-ConverterParam：转换器辅助参数[导出时]，导出时使用，如日期格式化导出，导出保留的小数位等；如果是字符串，则多个参数使用|分隔
+ConverterParam：转换器辅助参数[导出时]，导出时使用，如日期格式化导出，导出保留的小数位等；如需自定义Converter，则ConverterParam会完全放置到Convert方法的第二个参数中
 
 Sort：字段顺序[导出时]，导出和读取都可能用到
 
@@ -56,7 +56,7 @@ Converter为内置的接口IExportConverter，主要是为了导出使用；目�
 程序内部提供了常用的Converter，命名空间为：ExcelKit.Core.Infrastructure.Converter ，内置如下：
 
 
-* BoolConverter（导出后显示为：是   否）
+* BoolConverter（适用于bool类型字段，可指定ConverterParam，如ConverterParam = "男|女"，字段定义为bool?可空时，true为男，false为女，为空则导出也为空，默认不指定ConverterParam的话，导出后显示为：是  否；自定义导出文字，用|区分，左边文字为字段等于true时导出的值，右边为字段等于false时导出的值）
 * DateTimeFmtConverter（日期格式化Converter，如需自定义日期格式，需指定ConverterParam，使用详见下方示例）
 * DecimalPointDigitConverter（小数类Converter，如需指定保留几位小数，需指定ConverterParam，使用详见下方示例）
 * EnumConverter（枚举Converter，需要在枚举上方打上此特性[System.ComponentModel.Description("用户类型")]，导出时就会根据指定的描述展示对应的文字，如果枚举加了可空，则使用时Converter = typeof(EnumConverter<UserStatusEnum?>)）
@@ -75,14 +75,36 @@ Converter为内置的接口IExportConverter，主要是为了导出使用；目�
 * 多Sheet导出时，一定注意创建的Sheet名称，后面AppendData需要指定Sheet名称，两边要一致。
 * 并发导出时，一个任务对应一个Sheet
 
-1.1 泛型类型
+1.1 便捷使用
 
 ```csharp
 
-//如果数据量不大，可采用此方式便捷导出
+//如果数据量不大，可采用LiteDataHelper便捷导出；可自定义Sheet名称，默认Sheet1
 var excelInfo = LiteDataHelper.ExportToWebDown(users,fileName: $"用户数据-{DateTime.Now.ToString("yyyyMMddHHmm")}");
+//保存物理文件，默认位置为程序运行目录；可自定义Sheet名称，默认Sheet1
+var excelInfo = LiteDataHelper.ExportToDisk(users,fileName: $"用户数据-{DateTime.Now.ToString("yyyyMMddHHmm")}");
+
+
+/// <summary>
+/// 非大批量数据便捷导出（Web）
+/// </summary>
+/// <returns></returns>
+public IActionResult LiteDataExport()
+{
+	var users = new List<UserExportDto>();
+	for (int i = 1; i <= ExportCount; i++)
+	{
+		users.Add(new UserExportDto { Account = $"2020-{i}", Name = $"测试用户-{i}" });
+	}
+
+	var excelInfo = LiteDataHelper.ExportToWebDown(users,fileName: $"用户数据-{DateTime.Now.ToString("yyyyMMddHHmm")}");
+	return File(excelInfo.Stream, excelInfo.WebContentType, excelInfo.FileName);
+}
 
 ```
+
+
+1.2 泛型类型
 
 ```csharp
 
@@ -96,6 +118,12 @@ public class UserDto
 	
 	[ExcelKit(Desc = "金额", Width = 20, Sort = 10, Converter = typeof(DecimalPointDigitConverter), ConverterParam = 2)]
 	public decimal Money { get; set; } = 20;
+	
+	[ExcelKit(Desc = "是否确认", Width = 20, Sort = 30, Converter = typeof(BoolConverter), ConverterParam = "√|×")]
+	public bool? IsConfirm { get; set; }
+
+	[ExcelKit(Desc = "性别", Width = 20, Sort = 30, Converter = typeof(BoolConverter), ConverterParam = "男|女")]
+	public bool? IsMan { get; set; }
 
 	[ExcelKit(Desc = "创建时间", Width = 50, Sort = 10, Converter = typeof(DateTimeFmtConverter), ConverterParam = "yyyy-MM-dd")]
 	public DateTime CreateDate { get; set; } = DateTime.Now;
@@ -110,7 +138,7 @@ using (var context = ContextFactory.GetWriteContext("测试导出文件"))
 
        for (int i = 0; i < 1000000; i++)
        {
-           sheet.AppendData<UserDto>($"Sheet{index}", new UserDto { Account = $"{index}-{i}-2010211", Name = $"{index}-{i}-用户", CreateDate = DateTime.Now, Money = Convert.ToDouble(i) });
+           sheet.AppendData<UserDto>($"Sheet{index}", new UserDto { Account = $"{index}-{i}-2010211", Name = $"{index}-{i}-用户", CreateDate = DateTime.Now, Money = Convert.ToDouble(i), IsConfirm = i % 2 == 0, IsMan = i % 2 == 0  });
        }
     });
 
@@ -121,7 +149,7 @@ using (var context = ContextFactory.GetWriteContext("测试导出文件"))
 ```
     
     
-1.2 动态字段类型
+1.3 动态字段类型
 
 
 ```csharp
@@ -169,7 +197,7 @@ var context = ContextFactory.GetReadContext();
 context.ReadRows("测试导出文件.xlsx", new ReadRowsOptions()
 {
 	SucData = (rowdata, rowindex) =>
-    {
+	{
 		Console.WriteLine(JsonConvert.SerializeObject(rowdata));
 	}
 });
