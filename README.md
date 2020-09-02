@@ -22,7 +22,7 @@ AllowNull：字段是否允许为空，一般用于读取
 
 Converter：转换器[导出时]，组件中提供了常用的转换器，如需自定义，则继承自IExportConverter<T>并实现方法
 
-ConverterParam：转换器辅助参数[导出时]，导出时使用，如日期格式化导出，导出保留的小数位等；如果是字符串，则多个参数使用|分隔
+ConverterParam：转换器辅助参数[导出时]，导出时使用，如日期格式化导出，导出保留的小数位等；如需自定义Converter，则ConverterParam会完全放置到Convert方法的第二个参数中
 
 Sort：字段顺序[导出时]，导出和读取都可能用到
 
@@ -76,7 +76,7 @@ Converter为内置的接口IExportConverter，主要是为了导出使用；目�
 * 多Sheet导出时，一定注意创建的Sheet名称，后面AppendData需要指定Sheet名称，两边要一致。
 * 并发导出时，一个任务对应一个Sheet
 
-1.1 便捷实用
+1.1 便捷使用
 
 ```csharp
 
