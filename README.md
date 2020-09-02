@@ -56,8 +56,7 @@ Converter为内置的接口IExportConverter，主要是为了导出使用；目�
 程序内部提供了常用的Converter，命名空间为：ExcelKit.Core.Infrastructure.Converter ，内置如下：
 
 
-* BoolConverter（可指定ConverterParam，如ConverterParam = "男|女"，则字段定义为bool?时，true为男，false为女，可空为空时导出也为空，
-默认不指定如ConverterParam的话，导出后显示为：是  否，bool的为2个值，用|区分，左边为true时导出的值，右边为false导出时的值）
+* BoolConverter（适用于bool类型字段，可指定ConverterParam，如ConverterParam = "男|女"，字段定义为bool?可空时，true为男，false为女，为空则导出也为空，默认不指定ConverterParam的话，导出后显示为：是  否；自定义导出文字，用|区分，左边文字为字段等于true时导出的值，右边为字段等于false时导出的值）
 * DateTimeFmtConverter（日期格式化Converter，如需自定义日期格式，需指定ConverterParam，使用详见下方示例）
 * DecimalPointDigitConverter（小数类Converter，如需指定保留几位小数，需指定ConverterParam，使用详见下方示例）
 * EnumConverter（枚举Converter，需要在枚举上方打上此特性[System.ComponentModel.Description("用户类型")]，导出时就会根据指定的描述展示对应的文字，如果枚举加了可空，则使用时Converter = typeof(EnumConverter<UserStatusEnum?>)）
