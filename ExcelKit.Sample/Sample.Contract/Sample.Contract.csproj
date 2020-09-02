@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExcelKit" Version="1.0.12" />
+    <PackageReference Include="ExcelKit" Version="1.0.13" />
   </ItemGroup>
 
 </Project>

@@ -28,10 +28,12 @@ namespace Sample.Consoles
 			{
 				Parallel.For(0, 4, index =>
 				{
-					var sheet = context.CrateSheet<UserExportDto>($"Sheet{index}");
-					for (int i = 0; i < 1020000; i++)
+					var sheetName = $"Sheet{index}";
+					var sheet = context.CrateSheet<UserExportDto>(sheetName);
+
+					for (int i = 0; i < 1020; i++)
 					{
-						sheet.AppendData($"Sheet{index}", new UserExportDto { Account = $"{index}-{i}-2010211", Name = $"{index}-{i}-用户用户" });
+						sheet.AppendData(sheetName, new UserExportDto { Account = $"{index}-{i}-2010211", Name = $"{index}-{i}-用户用户", IsConfirm = i % 2 == 0, IsMan = i % 2 == 0 });
 					}
 				});
 
