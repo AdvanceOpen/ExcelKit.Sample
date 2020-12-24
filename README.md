@@ -229,12 +229,17 @@ context.ReadRows("测试导出文件.xlsx", new ReadRowsOptions()
 
 ```csharp
 
+//FailData中的odata为Excel中的原始数据，failinfo为错误信息
 var context = ContextFactory.GetReadContext();
 context.ReadSheet<UserDto>("测试导出文件.xlsx", new ReadSheetOptions<UserDto>()
 {
 	SucData = (rowdata, rowindex) =>
 	{
 		Console.WriteLine(JsonConvert.SerializeObject(rowdata));
+	},
+	FailData = (odata, failinfo) =>
+	{
+		Console.WriteLine($"读取失败，{failinfo.FirstOrDefault().errorMsg}");
 	}
 });
 
