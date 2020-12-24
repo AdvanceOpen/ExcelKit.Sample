@@ -197,7 +197,7 @@ using (var context = ContextFactory.GetWriteContext("测试导出文件"))
 var context = ContextFactory.GetReadContext();
 context.ReadRows("测试导出文件.xlsx", new ReadRowsOptions()
 {
-	SucData = (rowdata, rowindex) =>
+	RowData = rowdata =>
 	{
 		Console.WriteLine(JsonConvert.SerializeObject(rowdata));
 	}
@@ -213,11 +213,14 @@ context.ReadRows("测试导出文件.xlsx", new ReadRowsOptions()
 var context = ContextFactory.GetReadContext();
 context.ReadRows("测试导出文件.xlsx", new ReadRowsOptions()
 {
-	ReadWay = ReadWay.SheetName,
-	SucData = (rowdata, rowindex) =>
+	context.ReadRows("测试导出文件.xlsx", new ReadRowsOptions()
 	{
-		Console.WriteLine(JsonConvert.SerializeObject(rowdata));
-	}
+		ReadWay = ReadWay.SheetName,
+		RowData = rowdata =>
+		{
+			Console.WriteLine(JsonConvert.SerializeObject(rowdata));
+		}
+	});
 });
 
 ```
