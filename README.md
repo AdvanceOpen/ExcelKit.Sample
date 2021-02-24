@@ -245,7 +245,7 @@ context.ReadSheet<UserDto>("测试导出文件.xlsx", new ReadSheetOptions<UserD
 
 ```
 
-2.4 动态读取Sheet
+2.4 动态读取Sheet（不需要类）
 
 ```csharp
 
