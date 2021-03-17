@@ -271,7 +271,7 @@ context.ReadSheet("测试导出文件.xlsx", new ReadSheetDicOptions()
 
 ```csharp
 
-//如果是传入的文件路径，内部会自动释放Stream   如果是传入的Stream，Options中有选项可以指定是否释放，不释放的话可以后续继续读取处理其他事情
+//如果是传入的文件路径，内部会自动释放Stream；如果是传入的Stream，Options中有选项可以指定是否释放，不释放的话可以后续继续读取处理其他事情
 var rowsCount = ContextFactory.GetReadContext().ReadSheetRowsCount(System.IO.File.OpenRead("测试导出文件.xlsx"), new ReadSheetRowsCountOptions());
 
 ```
