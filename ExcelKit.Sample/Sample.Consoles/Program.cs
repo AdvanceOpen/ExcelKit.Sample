@@ -15,10 +15,13 @@ namespace Sample.Consoles
 		static void Main(string[] args)
 		{
 			//1.泛型类导出
-			ExcelWriteWrapper.GenericWrite();
+			//ExcelWriteWrapper.GenericWrite();
 
 			//2.泛型类读取
 			//ExcelReadWrapper.ReadSheet();
+
+			//3.获取总行数
+			ExcelReadWrapper.GetSheetRowCount();
 			Console.Read();
 		}
 	}

@@ -24,14 +24,14 @@ namespace Sample.Consoles
 		public static string GenericWrite()
 		{
 			string filePath;
-			using (var context = ContextFactory.GetWriteContext($"用户数据-{DateTime.Now.ToString("yyyyMMddHHmm")}"))
+			using (var context = ContextFactory.GetWriteContext("用户数据"))
 			{
 				Parallel.For(0, 4, index =>
 				{
 					var sheetName = $"Sheet{index}";
 					var sheet = context.CrateSheet<UserExportDto>(sheetName);
 
-					for (int i = 0; i < 1020; i++)
+					for (int i = 0; i < 102000; i++)
 					{
 						sheet.AppendData(sheetName, new UserExportDto { Account = $"{index}-{i}-2010211", Name = $"{index}-{i}-用户用户", IsConfirm = i % 2 == 0, IsMan = i % 2 == 0 });
 					}
@@ -51,7 +51,7 @@ namespace Sample.Consoles
 		public static string DynamicWrite()
 		{
 			string filePath;
-			using (var context = ContextFactory.GetWriteContext($"用户数据-{DateTime.Now.ToString("yyyyMMddHHmm")}"))
+			using (var context = ContextFactory.GetWriteContext("用户数据"))
 			{
 				//动态指定Code为字段名，自己定义，和AppendData中的数据字段名保持一致即可，Desc为导出的Excel列头名
 				//注意CreateSheet方法最后一个字段，指定多少条数据自动拆分一个新Sheet，不指定默认为单Sheet最大数据量1048200
