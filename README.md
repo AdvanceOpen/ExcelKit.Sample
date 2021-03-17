@@ -94,10 +94,10 @@ var isSafeSheetName = IsSafeSheetName(string sheetName)
 /// <returns></returns>
 public IActionResult LiteDataExport()
 {
-     //此方式创建后，全部在内存中，故数据量打的时候会占用内存，适合数据量不大使用；大数据量的请采用上述的AppendData方式
-     var users = Enumerable.Range(1, ExportCount).Select(index => new UserExportDto { Account = $"2021-{index}", Name = $"测试用户-{index}", IsMan = true, IsConfirm = true }).ToList();
-     var excelInfo = LiteDataHelper.ExportToWebDown(users, fileName: "用户数据");
-     return File(excelInfo.Stream, excelInfo.WebContentType, excelInfo.FileName);
+    //此方式对象全部在内存中，故数据量大的时候会占用内存，适合数据量不大使用；大数据量不占用内存的请采用上述的AppendData方式
+    var users = Enumerable.Range(1, ExportCount).Select(index => new UserExportDto { Account = $"2021-{index}", Name = $"测试用户-{index}", IsMan = true, IsConfirm = true }).ToList();
+    var excelInfo = LiteDataHelper.ExportToWebDown(users, fileName: "用户数据");
+    return File(excelInfo.Stream, excelInfo.WebContentType, excelInfo.FileName);
 }
 
 ```
