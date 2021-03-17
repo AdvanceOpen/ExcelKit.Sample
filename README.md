@@ -189,7 +189,17 @@ using (var context = ContextFactory.GetWriteContext("测试导出文件"))
 * ReadRowsOptions仅仅是读取行数据，数据返回的是一行，没有对应的Key，默认情况下，空单元格会被直接忽略，返回的行数据都是有值的，当需要返回包含空的单元格时，配置ReadEmptyCell为true，同时指定Excel的列信息ColumnHeaders数组，里面的元素为"A" "B" "C"等，即表头列信息，Excel中可看到
 
 
-2.1 读取行（默认按照Sheet索引读取，此处为读取第一个Sheet）
+2.1 读取一行
+
+```csharp
+
+//sheetIndex为Sheet索引(从1开始)，rowLine为行号(从1开始)，更多使用请查看定义
+var headers = LiteDataHelper.ReadOneRow(filePath: "用户数据.xlsx", sheetIndex: 1, rowLine: 1);
+Console.WriteLine($"表头为：{string.Join("  ", headers)}");
+
+```
+
+2.2 读取行（默认按照Sheet索引读取，此处为读取第一个Sheet）
 
 ```csharp
 
@@ -205,7 +215,7 @@ context.ReadRows("测试导出文件.xlsx", new ReadRowsOptions()
 
 ```
 
-2.2 读取行（可指定Sheet名称或者Sheet索引，此处指定按照Sheet名称读取）
+2.3 读取行（可指定Sheet名称或者Sheet索引，此处指定按照Sheet名称读取）
 
 ```csharp
 
@@ -224,7 +234,7 @@ context.ReadRows("测试导出文件.xlsx", new ReadRowsOptions()
 
 ```
 
-2.3 泛型读取Sheet
+2.4 泛型读取Sheet
 
 ```csharp
 
@@ -244,7 +254,7 @@ context.ReadSheet<UserDto>("测试导出文件.xlsx", new ReadSheetOptions<UserD
 
 ```
 
-2.4 动态读取Sheet
+2.5 动态读取Sheet
 
 ```csharp
 
@@ -263,13 +273,30 @@ context.ReadSheet("测试导出文件.xlsx", new ReadSheetDicOptions()
 });
 ```
 
-2.5 获取单Sheet中的总行数
+2.6 获取单Sheet中的总行数
 
 ```csharp
 
-//如果是传入的文件路径，内部会自动释放Stream；如果是传入的Stream，Options中有选项可以指定是否释放，不释放的话可以后续继续读取处理其他事情
-var rowsCount = ContextFactory.GetReadContext().ReadSheetRowsCount(System.IO.File.OpenRead("测试导出文件.xlsx"), new ReadSheetRowsCountOptions());
+//1.指定Sheet索引(从1开始)读取
+var count1 = ContextFactory.GetReadContext().ReadSheetRowsCount("用户数据.xlsx", new ReadSheetRowsCountOptions()
+{
+      //可以不指定SheetIndex，默认就为1
+      SheetIndex = 1,
+      //可以不指定，默认为释放，当需要多次读取时，可指定不释放传false
+     //比如对于反馈进度的，先读取总行数，再读取内容
+     IsDisposeStream = true,
+});
+Console.WriteLine($"指定Sheet索引为1读取后的总行数为：{count1}");
+
+//2.指定Sheet名称读取
+var count2 = ContextFactory.GetReadContext().ReadSheetRowsCount("用户数据.xlsx", new ReadSheetRowsCountOptions()
+{
+     //可以不指定SheetIndex，默认就为1
+     SheetName = "Sheet2",
+     //可以不指定，默认为释放，当需要多次读取时，可指定不释放传false
+    //比如对于反馈进度的，先读取总行数，再读取内容
+    IsDisposeStream = true,
+});
+Console.WriteLine($"指定Sheet名称为Sheet2读取后的总行数为：{count2}");
 
 ```
-
-
