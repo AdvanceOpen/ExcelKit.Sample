@@ -1,12 +1,12 @@
 # ExcelKit
 
-Excel导入导出套件(源码已发布，可直接搜索ExcelKit)，支持百万级(几百万亦可)数据导出和读取（由于Excel原因，此处仅限xlsx）而不占用多少内存，方便易用的方法让导入导出更易使用
-支持.Net Core，docker，win下皆可使用，包采用的是.Net Standard2.1
+Excel导入导出套件，支持百万级(几百万亦可)数据 导出 和 读取 （由于Excel原因，此处仅限xlsx）而不占用多少内存，方便易用的方法让导入导出更易使用
+支持.Net Core，docker，win下皆可使用，包采用.Net Standard2.1制作
 
 
 使用方式：Nuget安装：`Install-Package ExcelKit`
 
-**重要提示：如果另外安装了NPOI，请使用NPOI2.4.1版本；已增加Web项目使用示例，可直接运行；导出使用同步方法，不需要异步
+* 重要提示：如果另外安装了NPOI，请使用NPOI2.4.1版本；已增加Web项目使用示例，![ExcelKit.Sample](https://github.com/AdvanceOpen/ExcelKit.Sample) ；导出使用同步方法，不需要异步
 
 
 
@@ -14,35 +14,35 @@ Excel导入导出套件(源码已发布，可直接搜索ExcelKit)，支持百�
 
 ### ExcelKitAttribute详解：
 
-Code：字段编码，如Name、Age; 读取时不指定Code默认使用字段名
+* Code：字段编码，如Name、Age; 读取时不指定Code默认使用字段名
 
-Desc：字段描述[必指定]，对应Excel列头中的文本，如 姓名、地址，
+* Desc：字段描述[必指定]，对应Excel列头中的文本，如 姓名、地址，
 
-AllowNull：字段是否允许为空，一般用于读取
+* AllowNull：字段是否允许为空，一般用于读取
 
-Converter：转换器[导出时]，组件中提供了常用的转换器，如需自定义，则继承自IExportConverter<T>并实现方法
+* Converter：转换器[导出时]，组件中提供了常用的转换器，如需自定义，则继承自IExportConverter<T>并实现方法
 
-ConverterParam：转换器辅助参数[导出时]，导出时使用，如日期格式化导出，导出保留的小数位等；如需自定义Converter，则ConverterParam会完全放置到Convert方法的第二个参数中
+* ConverterParam：转换器辅助参数[导出时]，导出时使用，如日期格式化导出，导出保留的小数位等；如需自定义Converter，则ConverterParam会完全放置到Convert方法的第二个参数中
 
-Sort：字段顺序[导出时]，导出和读取都可能用到
+* Sort：字段顺序[导出时]，导出和读取都可能用到
 
-Width：列宽[导出时]，指定Excel列宽度
+* Width：列宽[导出时]，指定Excel列宽度
 
-Align：对齐方式[导出时]，指定Excel列中的文本对齐方式
+* Align：对齐方式[导出时]，指定Excel列中的文本对齐方式
 
-FontColor：字体颜色[导出时]，指定Excel列中的字体颜色，枚举项
+* FontColor：字体颜色[导出时]，指定Excel列中的字体颜色，枚举项
 
-ForegroundColor：前景色[导出时]，指定Excel列的填充色，枚举项
+* ForegroundColor：前景色[导出时]，指定Excel列的填充色，枚举项
 
-HeadRowFrozen：是否启用表头行冻结[导出时]
+* HeadRowFrozen：是否启用表头行冻结[导出时]
 
-HeadRowFilter：是否启用表头行筛选[导出时]
+* HeadRowFilter：是否启用表头行筛选[导出时]
 
-IsIgnore：是否完全忽略
+* IsIgnore：是否完全忽略
 
-IsOnlyIgnoreRead：是否仅读取时忽略
+* IsOnlyIgnoreRead：是否仅读取时忽略
 
-IsOnlyIgnoreWrite：是否仅导出时忽略
+* IsOnlyIgnoreWrite：是否仅导出时忽略
 
 
 -----
@@ -83,7 +83,10 @@ Converter为内置的接口IExportConverter，主要是为了导出使用；目�
 var excelInfo = LiteDataHelper.ExportToWebDown(users,fileName: $"用户数据-{DateTime.Now.ToString("yyyyMMddHHmm")}");
 //保存物理文件，默认位置为程序运行目录；可自定义Sheet名称，默认Sheet1
 var excelInfo = LiteDataHelper.ExportToDisk(users,fileName: $"用户数据-{DateTime.Now.ToString("yyyyMMddHHmm")}");
-
+//获取安全的Sheet名称
+var sheetName = GetSafeSheetName(string sheetName);
+//是否是安全的Sheet名称
+var isSafeSheetName = IsSafeSheetName(string sheetName)
 
 /// <summary>
 /// 非大批量数据便捷导出（Web）
@@ -245,7 +248,7 @@ context.ReadSheet<UserDto>("测试导出文件.xlsx", new ReadSheetOptions<UserD
 
 ```
 
-2.4 动态读取Sheet（不需要类）
+2.4 动态读取Sheet
 
 ```csharp
 
@@ -263,3 +266,14 @@ context.ReadSheet("测试导出文件.xlsx", new ReadSheetDicOptions()
 	}
 });
 ```
+
+2.5 获取单Sheet中的总行数
+
+```csharp
+
+//如果是传入的文件路径，内部会自动释放Stream   如果是传入的Stream，Options中有选项可以指定是否释放，不释放的话可以后续继续读取处理其他事情
+var rowsCount = ContextFactory.GetReadContext().ReadSheetRowsCount(System.IO.File.OpenRead("测试导出文件.xlsx"), new ReadSheetRowsCountOptions());
+
+```
+
+
