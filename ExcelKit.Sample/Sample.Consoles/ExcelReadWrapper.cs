@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using ExcelKit.Core.Constraint.Enums;
 using ExcelKit.Core.Infrastructure.Factorys;
 using Sample.Contract.ReadDtos;
+using ExcelKit.Core.Helpers;
 
 namespace Sample.Consoles
 {
@@ -41,6 +42,16 @@ namespace Sample.Consoles
                 IsDisposeStream = true,
             });
             Console.WriteLine($"指定Sheet名称为Sheet2读取后的总行数为：{count2}");
+        }
+
+        /// <summary>
+        /// 读取Sheet中一行数据(如用来获取表头行)
+        /// </summary>
+        public static void ReadOneRow()
+        {
+            //sheetIndex为Sheet索引(从1开始)，rowLine为行号(从1开始)
+            var headers = LiteDataHelper.ReadOneRow(filePath: "用户数据.xlsx", sheetIndex: 1, rowLine: 1);
+            Console.WriteLine($"表头为：{string.Join("  ", headers)}");
         }
 
         /// <summary>
