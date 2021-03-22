@@ -94,7 +94,7 @@ var isSafeSheetName = IsSafeSheetName(string sheetName)
 /// <returns></returns>
 public IActionResult LiteDataExport()
 {
-    //此方式对象全部在内存中，故数据量大的时候会占用内存，适合数据量不大使用；大数据量不占用内存的请采用上述的AppendData方式
+    //此方式对象全部在内存中，故数据量大的时候会占用内存，适合数据量不大使用；大数据量不占用内存的请采用AppendData方式
     var users = Enumerable.Range(1, 1000).Select(index => new UserExportDto { Account = $"2021-{index}", Name = $"测试用户-{index}", IsMan = true, IsConfirm = true }).ToList();
     var excelInfo = LiteDataHelper.ExportToWebDown(users, fileName: "用户数据");
     return File(excelInfo.Stream, excelInfo.WebContentType, excelInfo.FileName);
@@ -291,7 +291,7 @@ Console.WriteLine($"指定Sheet索引为1读取后的总行数为：{count1}");
 //2.指定Sheet名称读取
 var count2 = ContextFactory.GetReadContext().ReadSheetRowsCount("用户数据.xlsx", new ReadSheetRowsCountOptions()
 {
-     //可以不指定SheetIndex，默认就为1
+     //可以不指定SheetName，默认为Sheet1
      SheetName = "Sheet2",
      //可以不指定，默认为释放，当需要多次读取时，可指定不释放传false
     //比如对于反馈进度的，先读取总行数，再读取内容
